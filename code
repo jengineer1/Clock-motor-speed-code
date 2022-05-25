@@ -1,0 +1,67 @@
+// Written By: Jeremy Fielding. This is in reference to my clock video here. https://youtu.be/EsCE7KBG9WU
+//---- What follows but commented out is my son's original code. I updated it to be more unversally useable below. 
+// you will need to install the accelstepper library for it to work. 
+//defines pins used for information
+//const int stepPin = 3;
+//const int dirPin = 4;
+//int RPM = 6; // sets RPM
+
+//void setup() {
+//sets the two info pins as outputs
+//pinMode(stepPin,OUTPUT);
+//pinMode(dirPin,OUTPUT);
+//}
+
+//void loop() {
+//High = clockwise Low = Counter clockwise
+//digitalWrite(stepPin,HIGH);
+//delayMicroseconds(18750 / RPM);
+//digitalWrite(stepPin,LOW);
+//delayMicroseconds(18750 / RPM);
+//}
+//---------
+
+
+#include <AccelStepper.h>
+
+
+//Defining pins
+int Stepper1Pulse = 5;  // Pulse or step pin
+int Stepper1Direction = 6;  // Direction pin
+int Stepper2Pulse = 7;
+int Stepper2Direction = 8;
+int speedpot = A0;   // Potentiometer
+int positionpot = A1;
+
+
+//defining terms
+
+
+int Motor1speed = 1000;
+int speedmin = 0; //pulses per second
+int speedmax = 4000;  //pulses per second
+int positionmax = 1600;
+AccelStepper step1(1, Stepper1Pulse, Stepper1Direction);
+
+void setup() {               
+   
+
+  step1.setMaxSpeed (speedmax);  
+  step1.setSpeed(0);
+  
+  step1.setAcceleration(1000);
+
+  pinMode(Stepper1Pulse, OUTPUT);
+  pinMode(Stepper1Direction, OUTPUT);
+
+  digitalWrite(Stepper1Pulse, LOW);
+  digitalWrite(Stepper1Direction, LOW);
+
+
+}
+
+void loop() {
+  
+  step1.setSpeed(Motor1speed);
+  step1.runSpeed();
+}
